@@ -22,33 +22,9 @@ Notebook 使用 Python 标准库检查地址解析、TCP 端口和 SSH 公钥认
 
 ## 队员共享同一实例
 
-队员不需要把私钥交给队长。每个人用自己的电脑生成或找到 `.pub` 公钥，把**完整的一行公钥**发给队长。
+队员不需要把私钥交给队长。每个人用自己的电脑打开 [`get_ssh_public_key.ipynb`](get_ssh_public_key.ipynb) 并运行单元。Notebook 会列出本机 `.pub` 公钥、显示指纹，并将选定的完整公钥行复制到剪贴板。队员把剪贴板内容发给 **Alex**，由 Alex 添加到共享实例。若本机还没有公钥，Notebook 中提供了 Windows、macOS 和 Linux 的密钥生成命令。
 
-Windows PowerShell：
-
-```powershell
-$pub = "$env:USERPROFILE\.ssh\id_ed25519.pub"
-if (Test-Path $pub) {
-		Get-Content $pub | Set-Clipboard
-} else {
-		New-Item -ItemType Directory -Force "$env:USERPROFILE\.ssh" | Out-Null
-		$key = "$env:USERPROFILE\.ssh\amd_cloud_team"
-		ssh-keygen -t ed25519 -C "your-name@team" -f $key
-		Get-Content "$key.pub" | Set-Clipboard
-}
-```
-
-macOS / Linux：
-
-```bash
-mkdir -p ~/.ssh && chmod 700 ~/.ssh
-if [ -f ~/.ssh/id_ed25519.pub ]; then
-	cat ~/.ssh/id_ed25519.pub
-else
-	ssh-keygen -t ed25519 -C "your-name@team" -f ~/.ssh/amd_cloud_team
-	cat ~/.ssh/amd_cloud_team.pub
-fi
-```
+只发送 `.pub` 公钥；不要发送对应的无后缀私钥、口令或账号密码。Notebook 不会自动上传密钥，也不会把密钥写入仓库。
 
 按官方 FAQ 操作：新实例按平台 SSH key 设置流程登记队员公钥；如果实例已经运行，由有权限的队员登录该实例，把每位队员的公钥作为单独一行追加到对应 Linux 用户的 `~/.ssh/authorized_keys`，不需要销毁实例。随后每个人用自己的私钥和实例 SSH 地址连接。只分享公钥，绝不要上传或发送私钥、账号密码。
 
