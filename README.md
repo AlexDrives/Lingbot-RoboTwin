@@ -1,6 +1,6 @@
 # Radeon Cloud Robotwin Team Guide
 
-这个公开仓库用于共享 AMD Radeon Cloud / Robotwin 的通用操作经验、连接检查 Notebook 和队内实验记录模板。它共享的是文档与代码，不会共享账号、credits、私钥或云实例访问权。
+这个公开仓库用于共享 AMD Radeon Cloud / Robotwin 的通用操作经验、连接检查 Notebook 和队内实验记录建议。它共享的是文档与代码，不会共享账号、credits、私钥或云实例访问权。
 
 ## 安全边界
 
@@ -22,7 +22,35 @@ Notebook 使用 Python 标准库检查地址解析、TCP 端口和 SSH 公钥认
 
 ## 队员共享同一实例
 
-根据官方 FAQ，可在已经运行的实例中为队员添加各自的公钥，无需销毁实例。队员提供 `.pub` 公钥，由有权限的队员在实例对应 Linux 用户的 `~/.ssh/authorized_keys` 中添加；每个人仍使用自己的私钥连接。私钥绝不能上传仓库或发给队友。
+队员不需要把私钥交给队长。每个人用自己的电脑生成或找到 `.pub` 公钥，把**完整的一行公钥**发给队长。
+
+Windows PowerShell：
+
+```powershell
+$pub = "$env:USERPROFILE\.ssh\id_ed25519.pub"
+if (Test-Path $pub) {
+		Get-Content $pub | Set-Clipboard
+} else {
+		New-Item -ItemType Directory -Force "$env:USERPROFILE\.ssh" | Out-Null
+		$key = "$env:USERPROFILE\.ssh\amd_cloud_team"
+		ssh-keygen -t ed25519 -C "your-name@team" -f $key
+		Get-Content "$key.pub" | Set-Clipboard
+}
+```
+
+macOS / Linux：
+
+```bash
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+if [ -f ~/.ssh/id_ed25519.pub ]; then
+	cat ~/.ssh/id_ed25519.pub
+else
+	ssh-keygen -t ed25519 -C "your-name@team" -f ~/.ssh/amd_cloud_team
+	cat ~/.ssh/amd_cloud_team.pub
+fi
+```
+
+按官方 FAQ 操作：新实例按平台 SSH key 设置流程登记队员公钥；如果实例已经运行，由有权限的队员登录该实例，把每位队员的公钥作为单独一行追加到对应 Linux 用户的 `~/.ssh/authorized_keys`，不需要销毁实例。随后每个人用自己的私钥和实例 SSH 地址连接。只分享公钥，绝不要上传或发送私钥、账号密码。
 
 这种授权通常让成员以同一个 Linux 用户进入实例，意味着他们共享该用户的文件和权限。只添加可信队员的公钥，并在队员退出项目时按需移除对应公钥。
 
@@ -37,6 +65,7 @@ Notebook 使用 Python 标准库检查地址解析、TCP 端口和 SSH 公钥认
 
 - [Radeon Cloud 用户指南](https://github.com/AMD-DEV-CONTEST/Embodied-AI-Challenge-AMD-Platform-2026-09/blob/main/Radeon-Cloud-User-Guide/README.md)
 - [AMD VLA Contest 算力申请与使用规则](https://github.com/AMD-DEV-CONTEST/Embodied-AI-Challenge-AMD-Platform-2026-09/blob/main/Radeon-Cloud-User-Guide/AMD_VLA_Contest_Compute_Rules.md)
+- [Robotwin Radeon Cloud 训练示例](https://github.com/ZiguanWang/Robotwin-radeon-cloud)
 
 ## License
 
