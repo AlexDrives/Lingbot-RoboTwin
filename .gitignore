@@ -1,0 +1,19 @@
+# Per-user AMD Cloud connection details
+/instance
+/local_settings.json
+/check_amd_cloud_ssh.ipynb
+
+# SSH and other credentials
+**/.ssh/**
+**/id_rsa*
+**/id_ed25519*
+**/id_ecdsa*
+**/*.pem
+**/*.ppk
+**/*token*
+
+# Python and notebook runtime artifacts
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/

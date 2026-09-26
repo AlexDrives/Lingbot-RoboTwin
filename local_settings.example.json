@@ -1,0 +1,7 @@
+{
+  "identity_file": "~/.ssh/id_ed25519",
+  "http_url": "",
+  "local_proxy_port": 7890,
+  "remote_proxy_port": 17890,
+  "run_proxy_check": false
+}

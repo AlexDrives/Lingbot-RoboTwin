@@ -1,0 +1,5 @@
+算力规则：https://github.com/AMD-DEV-CONTEST/Embodied-AI-Challenge-AMD-Platform-2026-09/blob/main/Radeon-Cloud-User-Guide/AMD_VLA_Contest_Compute_Rules.md
+
+用户指南：https://github.com/AMD-DEV-CONTEST/Embodied-AI-Challenge-AMD-Platform-2026-09/blob/main/Radeon-Cloud-User-Guide/README.md
+
+训练示例：https://github.com/ZiguanWang/Robotwin-radeon-cloud
